@@ -10,6 +10,10 @@ The API is a REST API that allows to create and read sensors measurements data.
 
 Zod is used to validate the data sent to the API.
 Zod schemas are also tested with unit tests.
-Functional tests cover the controller layer.
-Unit tests covers the service layer where Fake repository is used instead of MongoDB.
+Functional tests cover the controller layer and perform end-to-end tests by sending in a request and receiving an expected response.
+Unit tests cover the service layer where the Fake repository is used instead of MongoDB.
 Integration tests cover the repository layer by testing the CRUD operations on the Mongo database.
+
+## IOT Sensor
+
+Contains a script that runs on a raspberry pi, and requires an SCD30 sensor to measure c02 in the atmosphere, temperature, and humidity.
