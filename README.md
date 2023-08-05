@@ -1,8 +1,15 @@
 ### WIP
 
-# SensorsDashboard
+# SensorsDashboard Project
 
 Monolith with an API and a Dashboard to view the readings from the environmental sensors
+
+## Dashboard
+
+The dashboard is a React app that uses the API to display the data from the sensors.
+
+Storybook is used to develop the components in isolation.
+Tailwind is used to style the components.
 
 ## API
 
