@@ -1,24 +1,21 @@
-import './App.css';
-import Button from './components/Button/Button';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Index from './pages/Index';
+import Layout from './pages/Layout';
+import PageNotFound from './pages/PageNotFound';
+import About from './pages/About';
 
 function App() {
     return (
-        <div className="App">
-            <h1 className=" text-3xl font-bold underline">
-                Sensors Dashboard WIP!
-            </h1>
-            <div className="pt-2">
-                <Button
-                    varient="primary"
-                    props={
-                        (onclick = () =>
-                            alert('This is an active construction site'))
-                    }
-                >
-                    Primary
-                </Button>
-            </div>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Index />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="*" element={<PageNotFound />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
