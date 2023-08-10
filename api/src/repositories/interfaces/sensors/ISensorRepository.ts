@@ -1,6 +1,9 @@
-import { Sensor, sensorParams } from '../../../models/sensor';
+import {
+  SensorReading,
+  sensorReadingParams,
+} from '../../../models/sensorReading';
 
-export interface ISensorRepository {
-  save(sensor: sensorParams): Promise<Sensor | undefined>;
-  getSensorData(sensorId: string): Promise<Sensor[]>;
+export interface ISensorReadingsRepository {
+  saveReading(sensor: sensorReadingParams): Promise<SensorReading | undefined>;
+  getSensorDataById(sensorId: string): Promise<SensorReading[]>;
 }

@@ -1,17 +1,17 @@
-import { Sensor } from '../../models/sensor';
-import { ISensorRepository } from '../../repositories/interfaces/sensors/ISensorRepository';
-import { FakeSensorRepository } from '../../test-utils/fakes/fake.sensor.repository';
+import { SensorReading } from '../../models/sensorReading';
+import { ISensorReadingsRepository } from '../../repositories/interfaces/sensors/ISensorRepository';
+import { FakeSensorReadingsRepository } from '../../test-utils/fakes/fake.sensor.repository';
 import { SensorService } from './sensors.service';
 import { v4 as uuidv4 } from 'uuid';
 
 describe('Sensor Service Test', () => {
   describe('save', () => {
-    let fakeSensorRepository: ISensorRepository;
+    let fakeSensorRepository: ISensorReadingsRepository;
     let sensorService: SensorService;
     let sensorId: string;
 
     beforeEach(() => {
-      fakeSensorRepository = new FakeSensorRepository();
+      fakeSensorRepository = new FakeSensorReadingsRepository();
       sensorService = new SensorService(fakeSensorRepository);
       sensorId = uuidv4();
     });
@@ -30,7 +30,7 @@ describe('Sensor Service Test', () => {
 
       //Then
       expect(savedSensor).toStrictEqual(
-        new Sensor({
+        new SensorReading({
           sensorId,
           temperature: 1,
           humidity: 2,
@@ -41,19 +41,19 @@ describe('Sensor Service Test', () => {
   });
 
   describe('getSensorData', () => {
-    let fakeSensorRepository: ISensorRepository;
+    let fakeSensorRepository: ISensorReadingsRepository;
     let sensorService: SensorService;
     let sensorId: string;
 
     beforeEach(() => {
-      fakeSensorRepository = new FakeSensorRepository();
+      fakeSensorRepository = new FakeSensorReadingsRepository();
       sensorService = new SensorService(fakeSensorRepository);
       sensorId = uuidv4();
     });
 
     it('should get empty array if no sensor data', async () => {
       //When
-      const foundSensors = await sensorService.getSensorData(sensorId);
+      const foundSensors = await sensorService.getSensorDataById(sensorId);
 
       //Then
       expect(foundSensors.length).toBe(0);
@@ -78,18 +78,18 @@ describe('Sensor Service Test', () => {
       await sensorService.save(sensorTwo);
 
       //When
-      const foundSensors = await sensorService.getSensorData(sensorId);
+      const foundSensors = await sensorService.getSensorDataById(sensorId);
 
       //Then
       expect(foundSensors).toStrictEqual(
         expect.arrayContaining([
-          new Sensor({
+          new SensorReading({
             sensorId,
             temperature: 1,
             humidity: 2,
             c02: 3,
           }),
-          new Sensor({
+          new SensorReading({
             sensorId,
             temperature: 4,
             humidity: 5,

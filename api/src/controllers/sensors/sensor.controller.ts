@@ -1,12 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import { SensorService } from '../../services/sensors/sensors.service';
-import { MongoBackedSensorRepository } from '../../repositories/sensors/sensors.repository';
+import { MongoBackedSensorReadingsRepository } from '../../repositories/sensors/sensors.repository';
 
 export class SensorController {
   sensorService: SensorService;
 
   constructor() {
-    this.sensorService = new SensorService(new MongoBackedSensorRepository());
+    this.sensorService = new SensorService(
+      new MongoBackedSensorReadingsRepository(),
+    );
   }
 
   getSensorDataBySensorId = async (
@@ -14,7 +16,7 @@ export class SensorController {
     res: Response,
     next: NextFunction,
   ) => {
-    const foundSensors = await this.sensorService.getSensorData(
+    const foundSensors = await this.sensorService.getSensorDataById(
       req.params.sensorId,
     );
     res.json(foundSensors);

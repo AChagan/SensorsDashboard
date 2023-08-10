@@ -1,21 +1,21 @@
-export type sensorParams = {
+export type sensorReadingParams = {
   sensorId: string;
   temperature: number;
   humidity: number;
   c02: number;
 };
 
-export class Sensor {
+export class SensorReading {
   private sensorId: string;
   private temperature: number;
   private humidity: number;
   private c02: number;
 
-  constructor(sensorParams: sensorParams) {
-    this.sensorId = sensorParams.sensorId;
-    this.temperature = sensorParams.temperature;
-    this.humidity = sensorParams.humidity;
-    this.c02 = sensorParams.c02;
+  constructor(sensorReadingParams: sensorReadingParams) {
+    this.sensorId = sensorReadingParams.sensorId;
+    this.temperature = sensorReadingParams.temperature;
+    this.humidity = sensorReadingParams.humidity;
+    this.c02 = sensorReadingParams.c02;
   }
 
   get id(): string {

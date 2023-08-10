@@ -1,12 +1,14 @@
-import { Sensor, sensorParams } from '../../models/sensor';
-import { ISensorRepository } from '../../repositories/interfaces/sensors/ISensorRepository';
+import { SensorReading, sensorReadingParams } from '../../models/sensorReading';
+import { ISensorReadingsRepository } from '../../repositories/interfaces/sensors/ISensorRepository';
 
-export class FakeSensorRepository implements ISensorRepository {
-  sensors: Sensor[] = [];
+export class FakeSensorReadingsRepository implements ISensorReadingsRepository {
+  sensors: SensorReading[] = [];
   constructor() {}
 
-  public async save(sensor: sensorParams): Promise<Sensor | undefined> {
-    const sensorToBeSaved = new Sensor(sensor);
+  public async saveReading(
+    sensor: sensorReadingParams,
+  ): Promise<SensorReading | undefined> {
+    const sensorToBeSaved = new SensorReading(sensor);
     this.sensors.push(sensorToBeSaved);
     const savedSensor = this.sensors.find(
       (sensor) => sensor.id === sensorToBeSaved.id,
@@ -14,7 +16,7 @@ export class FakeSensorRepository implements ISensorRepository {
     return savedSensor ? savedSensor : undefined;
   }
 
-  public async getSensorData(sensorId: string): Promise<Sensor[]> {
+  public async getSensorDataById(sensorId: string): Promise<SensorReading[]> {
     const foundSensor = this.sensors.filter((sensor) => sensor.id === sensorId);
     return foundSensor;
   }

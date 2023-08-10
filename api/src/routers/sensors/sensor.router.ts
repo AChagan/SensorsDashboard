@@ -11,6 +11,7 @@ export class SensorRouter {
     const sensor = new SensorController();
 
     router.get('/sensors/:sensorId', sensor.getSensorDataBySensorId);
+
     router.post(
       '/sensors/data/:sensorId',
       validate(AddSensorDataBySensorId),

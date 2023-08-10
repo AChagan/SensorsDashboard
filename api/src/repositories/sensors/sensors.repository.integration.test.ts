@@ -1,12 +1,12 @@
-import { Sensor } from '../../models/sensor';
-import { MongoBackedSensorRepository } from './sensors.repository';
+import { MongoBackedSensorReadingsRepository } from './sensors.repository';
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
 mongoose.connect('mongodb://127.0.0.1');
 
 describe('Sensor Repository Integration Test', () => {
-  const mongoBackedSensorRepository = new MongoBackedSensorRepository();
+  const mongoBackedSensorReadingsRepository =
+    new MongoBackedSensorReadingsRepository();
   describe('getSensorData', () => {
     let sensorId: string;
     beforeEach(async () => {
@@ -14,9 +14,8 @@ describe('Sensor Repository Integration Test', () => {
     });
     it('should return an empty array', async () => {
       //When
-      const savedSensor = await mongoBackedSensorRepository.getSensorData(
-        sensorId,
-      );
+      const savedSensor =
+        await mongoBackedSensorReadingsRepository.getSensorDataById(sensorId);
 
       //Then
       expect(savedSensor.length).toBe(0);
@@ -31,12 +30,13 @@ describe('Sensor Repository Integration Test', () => {
         c02: 3,
       };
 
-      await mongoBackedSensorRepository.save(sensor);
+      await mongoBackedSensorReadingsRepository.saveReading(sensor);
 
       //When
-      const savedSensor = await mongoBackedSensorRepository.getSensorData(
-        sensor.sensorId,
-      );
+      const savedSensor =
+        await mongoBackedSensorReadingsRepository.getSensorDataById(
+          sensor.sensorId,
+        );
 
       //Then
       expect(savedSensor.length).toBe(1);
@@ -59,7 +59,8 @@ describe('Sensor Repository Integration Test', () => {
         };
 
         // When
-        const savedSensor = await mongoBackedSensorRepository.save(sensor);
+        const savedSensor =
+          await mongoBackedSensorReadingsRepository.saveReading(sensor);
 
         // Then
         expect(savedSensor).toEqual(sensor);

@@ -1,19 +1,21 @@
-import { Sensor, sensorParams } from '../../models/sensor';
-import { ISensorRepository } from '../../repositories/interfaces/sensors/ISensorRepository';
+import { SensorReading, sensorReadingParams } from '../../models/sensorReading';
+import { ISensorReadingsRepository } from '../../repositories/interfaces/sensors/ISensorRepository';
 
 export class SensorService {
-  private sensorRepository: ISensorRepository;
-  constructor(sensorRepository: ISensorRepository) {
+  private sensorRepository: ISensorReadingsRepository;
+  constructor(sensorRepository: ISensorReadingsRepository) {
     this.sensorRepository = sensorRepository;
   }
 
-  public async save(sensor: sensorParams): Promise<Sensor | undefined> {
-    const savedSensor = await this.sensorRepository.save(sensor);
+  public async save(
+    sensor: sensorReadingParams,
+  ): Promise<SensorReading | undefined> {
+    const savedSensor = await this.sensorRepository.saveReading(sensor);
     return savedSensor;
   }
 
-  public async getSensorData(sensorId: string): Promise<Sensor[]> {
-    const foundSensor = await this.sensorRepository.getSensorData(sensorId);
+  public async getSensorDataById(sensorId: string): Promise<SensorReading[]> {
+    const foundSensor = await this.sensorRepository.getSensorDataById(sensorId);
     return foundSensor;
   }
 }
