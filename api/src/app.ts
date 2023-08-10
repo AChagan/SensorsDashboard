@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { SensorRouter } from './routers/sensors/sensor.router';
+import { V1Router } from './v1/v1';
 
 export class API {
   constructor() {}
@@ -13,8 +13,8 @@ export class API {
       connection.startSession();
     });
 
-    const sensorRouter = new SensorRouter();
-    app.use(sensorRouter.getRouter());
+    const v1Router = new V1Router();
+    app.use(v1Router.getV1Routers());
 
     app.listen(port, () => {
       console.log(`listening on http://localhost:${port}`);

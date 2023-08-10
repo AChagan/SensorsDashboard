@@ -1,9 +1,7 @@
 import { AddSensorDataBySensorId } from './sensorsValidation';
-import { v4 as uuidv4 } from 'uuid';
 
 describe('Sensor Validation Test', () => {
   it('should validate AddSensorDataBySensorId', () => {
-    const sensorId = uuidv4();
     const parsedData = AddSensorDataBySensorId.parse({
       body: {
         temperature: 1,

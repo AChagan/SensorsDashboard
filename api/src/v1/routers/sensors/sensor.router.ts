@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { SensorController } from '../../controllers/sensors/sensor.controller';
-import { validate } from '../../utils/validator';
-import { AddSensorDataBySensorId } from '../../utils/validationSchemas/sensorsValidation';
+import { validateRequest } from '../../../middleware/validator';
+import { AddSensorDataBySensorId } from '../../../middleware/validationSchemas/sensorsValidation';
 
 export class SensorRouter {
   constructor() {}
@@ -10,11 +10,11 @@ export class SensorRouter {
     const router = Router();
     const sensor = new SensorController();
 
-    router.get('/sensors/:sensorId', sensor.getSensorDataBySensorId);
+    router.get('/:sensorId', sensor.getSensorDataBySensorId);
 
     router.post(
-      '/sensors/data/:sensorId',
-      validate(AddSensorDataBySensorId),
+      '/data/:sensorId',
+      validateRequest(AddSensorDataBySensorId),
       sensor.addSensorDataBySensorId,
     );
 

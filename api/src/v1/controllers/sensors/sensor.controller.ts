@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { SensorService } from '../../services/sensors/sensors.service';
-import { MongoBackedSensorReadingsRepository } from '../../repositories/sensors/sensors.repository';
+import { SensorService } from '../../../services/sensors/sensors.service';
+import { MongoBackedSensorReadingsRepository } from '../../../repositories/sensors/mongoSensorsReading.repository';
 
 export class SensorController {
   sensorService: SensorService;

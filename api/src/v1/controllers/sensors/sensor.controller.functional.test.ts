@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
-import { API } from '../../app';
+import { API } from '../../../app';
 
 const app = new API().startServer(30033);
 

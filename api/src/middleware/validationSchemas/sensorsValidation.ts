@@ -1,4 +1,4 @@
-import { z, AnyZodObject } from 'zod';
+import { z } from 'zod';
 
 const addSensorDataBySensorId = z.object({
   body: z.object({
