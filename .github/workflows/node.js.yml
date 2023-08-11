@@ -1,6 +1,6 @@
 # Docs: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: API Tests CI
+name: API CI
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
         cache: 'npm'
         cache-dependency-path: './api/package-lock.json'
 
-    - name: MongoDB in GitHub Actions
+    - name: Setting up MongoDB
       uses: supercharge/mongodb-github-action@v1.10.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
