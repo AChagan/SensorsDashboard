@@ -10,6 +10,7 @@ The dashboard is a React app that uses the API to display the data from the sens
 
 Storybook is used to develop the components in isolation.
 Tailwind is used to style the components.
+CarbonCharts for data visualisation.
 
 ## API
 
@@ -23,4 +24,4 @@ Integration tests cover the repository layer by testing the CRUD operations on t
 
 ## IOT Sensor
 
-Contains a script that runs on a raspberry pi, and requires an SCD30 sensor to measure c02 in the atmosphere, temperature, and humidity.
+Contains a script that runs on a raspberry pi, and requires an SCD30 sensor to measure c02, temperature, and humidity.
