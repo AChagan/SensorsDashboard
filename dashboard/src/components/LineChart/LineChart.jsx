@@ -1,27 +1,54 @@
 import './LineChart.css';
-import {
-    LineChart as RechartLineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-} from 'recharts';
+import { LineChart as CarbonLineChart } from '@carbon/charts-react';
+import '@carbon/styles/css/styles.css';
+import '@carbon/charts-react/styles.css';
 
 function LineChart(props) {
-    const { title, data, children, ...rest } = props;
+    const {
+        title,
+        data,
+        xAxisTitle,
+        yAxisTitle,
+        height = '400px',
+        ...rest
+    } = props;
+
+    const renderingData = data.map((item) => ({
+        group: item.sensorId,
+        key: new Date(item.createTs).toLocaleString(undefined, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            hour12: false,
+            minute: '2-digit',
+            second: '2-digit',
+        }),
+        value: item.c02,
+    }));
+
+    const options = {
+        title: title,
+        axes: {
+            bottom: {
+                title: xAxisTitle,
+                mapsTo: 'key',
+                scaleType: 'labels',
+            },
+            left: {
+                title: yAxisTitle,
+                mapsTo: 'value',
+                scaleType: 'linear',
+            },
+        },
+        height: height,
+    };
 
     return (
-        <RechartLineChart width={400} height={400} data={data} title={title}>
-            <XAxis dataKey="humidity" />
-            <YAxis dataKey="c02" />
-            <CartesianGrid stroke="#eee" />
-            {data.map((entry, index) => console.log(entry.sensorId, entry.c02))}
-            <Line type="step" dataKey="c02" stroke="#8884d8" />
-            <Tooltip />
-            <Legend />
-        </RechartLineChart>
+        <CarbonLineChart
+            data={renderingData}
+            options={options}
+        ></CarbonLineChart>
     );
 }
 
