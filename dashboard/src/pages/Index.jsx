@@ -1,5 +1,4 @@
 import Button from '../components/Button/Button';
-
 const handleClick = () => {
     alert('Construction site');
 };

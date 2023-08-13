@@ -11,7 +11,7 @@ export class API {
 
   public startServer() {
     const corsOptions = {
-      origin: 'http://localhost:8081',
+      origin: 'http://localhost:3000',
     };
 
     let port: number | undefined = 8080;
