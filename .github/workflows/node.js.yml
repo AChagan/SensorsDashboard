@@ -1,6 +1,6 @@
 # Docs: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: API Tests CI
+name: API CI
 
 on:
   push:
@@ -15,7 +15,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [18.x]                
+        mongodb-version: ['6.0']
 
     steps:
     - uses: actions/checkout@v3
@@ -25,9 +26,17 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: './api/package-lock.json'
+
+    - name: Setting up MongoDB
+      uses: supercharge/mongodb-github-action@v1.10.0
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+        
     - run: npm ci
       working-directory: ./api
     - run: npm run build --if-present
       working-directory: ./api
     - run: npm test
+      env:
+        CI: true
       working-directory: ./api
