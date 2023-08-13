@@ -1,5 +1,5 @@
 import { SensorReading, sensorReadingParams } from '../../models/sensorReading';
-import { ISensorReadingsRepository } from '../../repositories/interfaces/sensors/ISensorRepository';
+import { ISensorReadingsRepository } from '../../repositories/interfaces/sensor/ISensorRepository';
 
 export class FakeSensorReadingsRepository implements ISensorReadingsRepository {
   sensors: SensorReading[] = [];

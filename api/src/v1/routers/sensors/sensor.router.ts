@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { SensorController } from '../../controllers/sensors/sensor.controller';
 import { validateRequest } from '../../../middleware/validator';
-import { AddSensorDataBySensorId } from '../../../middleware/validationSchemas/sensorsValidation';
+import { AddSensorDataBySensorId } from '../../../middleware/validationSchemas/sensors/sensorsValidation';
 
 export class SensorRouter {
   constructor() {}

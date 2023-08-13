@@ -1,12 +1,18 @@
 import { AddSensorDataBySensorId } from './sensorsValidation';
 
 describe('Sensor Validation Test', () => {
+  let createdTs: string;
+  beforeEach(() => {
+    createdTs = new Date().toISOString();
+  });
+
   it('should validate AddSensorDataBySensorId', () => {
     const parsedData = AddSensorDataBySensorId.parse({
       body: {
         temperature: 1,
         humidity: 2,
         c02: 3,
+        createdTs,
       },
     });
     expect(parsedData).toStrictEqual({
@@ -14,8 +20,22 @@ describe('Sensor Validation Test', () => {
         temperature: 1,
         humidity: 2,
         c02: 3,
+        createdTs,
       },
     });
+  });
+
+  it('should not validate AddSensorDataBySensorId with invalid date string', () => {
+    expect(() =>
+      AddSensorDataBySensorId.parse({
+        body: {
+          temperature: 1,
+          humidity: 2,
+          c02: 3,
+          createdTs: 'invalid-date-string',
+        },
+      }),
+    ).toThrowError('Invalid date');
   });
 
   it('should not validate AddSensorDataBySensorId with invalid sensor data', () => {
@@ -25,6 +45,7 @@ describe('Sensor Validation Test', () => {
           temperature: 'invalid-temperature',
           humidity: 2,
           c02: 3,
+          createdTs,
         },
       }),
     ).toThrowError('Expected number, received string');

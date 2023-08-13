@@ -1,6 +1,6 @@
 import { SensorReading, sensorReadingParams } from '../../models/sensorReading';
-import { SensorReadingModel } from '../../schemas/sensors/sensor.schema';
-import { ISensorReadingsRepository } from '../interfaces/sensors/ISensorRepository';
+import { SensorReadingModel } from '../../schemas/sensor/sensorReading.schema';
+import { ISensorReadingsRepository } from '../interfaces/sensor/ISensorRepository';
 
 export class MongoBackedSensorReadingsRepository
   implements ISensorReadingsRepository
@@ -28,6 +28,7 @@ export class MongoBackedSensorReadingsRepository
       temperature: sensor.temperature,
       humidity: sensor.humidity,
       c02: sensor.c02,
+      createdTs: sensor.createdTs,
     });
   }
 }

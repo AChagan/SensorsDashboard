@@ -1,12 +1,16 @@
 ### Scripts
 
+#### `npm run start`
+
+Builds and starts the application.
+
 #### `npm run dev`
 
-Starts the application in development using `nodemon` and `ts-node` to do hot reloading.
+Starts the application in development using `nodemon` to do hot reloading.
 
 #### `npm run test`
 
-Runs the `jest` tests once.
+Runs all of the tests.
 
 #### `npm run prettier-format`
 

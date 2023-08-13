@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { SensorService } from '../../../services/sensors/sensors.service';
-import { MongoBackedSensorReadingsRepository } from '../../../repositories/sensors/mongoSensorsReading.repository';
+import { MongoBackedSensorReadingsRepository } from '../../../repositories/sensor/mongoSensorsReading.repository';
 
 export class SensorController {
   sensorService: SensorService;
@@ -32,6 +32,7 @@ export class SensorController {
       temperature: req.body.temperature,
       humidity: req.body.humidity,
       c02: req.body.c02,
+      createdTs: req.body.createdTs,
     });
     res.json(savedSensor);
   };

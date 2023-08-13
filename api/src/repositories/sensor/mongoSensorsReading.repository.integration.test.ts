@@ -1,16 +1,18 @@
+import { setupDB } from '../../test-utils/setupDB';
 import { MongoBackedSensorReadingsRepository } from './mongoSensorsReading.repository';
-import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
-mongoose.connect('mongodb://127.0.0.1');
-
 describe('Sensor Repository Integration Test', () => {
+  setupDB();
+
   const mongoBackedSensorReadingsRepository =
     new MongoBackedSensorReadingsRepository();
   describe('getSensorData', () => {
     let sensorId: string;
+    let createdTs: string;
     beforeEach(async () => {
       sensorId = uuidv4();
+      createdTs = new Date().toISOString();
     });
     it('should return an empty array', async () => {
       //When
@@ -28,6 +30,7 @@ describe('Sensor Repository Integration Test', () => {
         temperature: 1,
         humidity: 2,
         c02: 3,
+        createdTs,
       };
 
       await mongoBackedSensorReadingsRepository.saveReading(sensor);
@@ -45,8 +48,10 @@ describe('Sensor Repository Integration Test', () => {
 
     describe('save', () => {
       let sensorId: string;
+      let createdTs: string;
       beforeEach(async () => {
         sensorId = uuidv4();
+        createdTs = new Date().toISOString();
       });
 
       it('should save a sensor', async () => {
@@ -56,6 +61,7 @@ describe('Sensor Repository Integration Test', () => {
           temperature: 1,
           humidity: 2,
           c02: 3,
+          createdTs: createdTs,
         };
 
         // When

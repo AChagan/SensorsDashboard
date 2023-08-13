@@ -5,6 +5,7 @@ export interface ISensorReading extends Document {
   temperature: number;
   humidity: number;
   c02: number;
+  createdTs: string;
 }
 
 const SensorReadingSchema: Schema = new Schema({
@@ -12,6 +13,7 @@ const SensorReadingSchema: Schema = new Schema({
   temperature: { type: Number, required: true },
   humidity: { type: Number, required: true },
   c02: { type: Number, required: true },
+  createdTs: { type: String, required: true },
 });
 
 export default mongoose.model<ISensorReading>(
@@ -19,8 +21,8 @@ export default mongoose.model<ISensorReading>(
   SensorReadingSchema,
 );
 
-const SensorReadingsModel = mongoose.model(
+const SensorReadingModel = mongoose.model(
   'Sensor_Reading',
   SensorReadingSchema,
 );
-export { SensorReadingsModel as SensorReadingModel };
+export { SensorReadingModel };

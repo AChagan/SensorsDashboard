@@ -1,5 +1,5 @@
 import { SensorReading } from '../../models/sensorReading';
-import { ISensorReadingsRepository } from '../../repositories/interfaces/sensors/ISensorRepository';
+import { ISensorReadingsRepository } from '../../repositories/interfaces/sensor/ISensorRepository';
 import { FakeSensorReadingsRepository } from '../../test-utils/fakes/fake.sensor.repository';
 import { SensorService } from './sensors.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,11 +9,13 @@ describe('Sensor Service Test', () => {
     let fakeSensorRepository: ISensorReadingsRepository;
     let sensorService: SensorService;
     let sensorId: string;
+    let createdTs: string;
 
     beforeEach(() => {
       fakeSensorRepository = new FakeSensorReadingsRepository();
       sensorService = new SensorService(fakeSensorRepository);
       sensorId = uuidv4();
+      createdTs = new Date().toISOString();
     });
 
     it('should save a sensor', async () => {
@@ -23,6 +25,7 @@ describe('Sensor Service Test', () => {
         temperature: 1,
         humidity: 2,
         c02: 3,
+        createdTs,
       };
 
       //When
@@ -35,6 +38,7 @@ describe('Sensor Service Test', () => {
           temperature: 1,
           humidity: 2,
           c02: 3,
+          createdTs,
         }),
       );
     });
@@ -44,11 +48,13 @@ describe('Sensor Service Test', () => {
     let fakeSensorRepository: ISensorReadingsRepository;
     let sensorService: SensorService;
     let sensorId: string;
+    let createdTs: string;
 
     beforeEach(() => {
       fakeSensorRepository = new FakeSensorReadingsRepository();
       sensorService = new SensorService(fakeSensorRepository);
       sensorId = uuidv4();
+      createdTs = new Date().toISOString();
     });
 
     it('should get empty array if no sensor data', async () => {
@@ -66,12 +72,14 @@ describe('Sensor Service Test', () => {
         temperature: 1,
         humidity: 2,
         c02: 3,
+        createdTs,
       };
       const sensorTwo = {
         sensorId,
         temperature: 4,
         humidity: 5,
         c02: 6,
+        createdTs,
       };
 
       await sensorService.save(sensorOne);
@@ -88,12 +96,14 @@ describe('Sensor Service Test', () => {
             temperature: 1,
             humidity: 2,
             c02: 3,
+            createdTs,
           }),
           new SensorReading({
             sensorId,
             temperature: 4,
             humidity: 5,
             c02: 6,
+            createdTs,
           }),
         ]),
       );

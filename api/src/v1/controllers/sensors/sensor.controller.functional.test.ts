@@ -2,20 +2,22 @@ import request from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
 import { API } from '../../../app';
 
-const app = new API().startServer(30033);
+const app = new API().startServer();
 
 describe('Sensor Controller Test', () => {
   describe('GET /sensors/:sensorId', () => {
     let sensorId: string;
+    let createdTs: string;
     beforeEach(() => {
       sensorId = uuidv4();
+      createdTs = new Date().toISOString();
     });
 
     it('should return 200', async () => {
       //Given
       await request(app)
         .post(`/sensors/data/${sensorId}`)
-        .send({ temperature: 1, humidity: 2, c02: 3 });
+        .send({ temperature: 1, humidity: 2, c02: 3, createdTs });
 
       //When
       const response = await request(app).get(`/sensors/${sensorId}`);
@@ -29,6 +31,7 @@ describe('Sensor Controller Test', () => {
             temperature: 1,
             humidity: 2,
             c02: 3,
+            createdTs,
           },
         ]),
       );
@@ -37,15 +40,17 @@ describe('Sensor Controller Test', () => {
 
   describe('POST /sensors/data/:sensorId', () => {
     let sensorId: string;
+    let createdTs: string;
     beforeEach(() => {
       sensorId = uuidv4();
+      createdTs = new Date().toISOString();
     });
 
     it('should return 200', async () => {
       //When
       const response = await request(app)
         .post(`/sensors/data/${sensorId}`)
-        .send({ temperature: 1, humidity: 2, c02: 3 });
+        .send({ temperature: 1, humidity: 2, c02: 3, createdTs });
 
       //Then
       expect(response.status).toBe(200);
@@ -54,6 +59,7 @@ describe('Sensor Controller Test', () => {
         temperature: 1,
         humidity: 2,
         c02: 3,
+        createdTs,
       });
     });
   });
