@@ -36,6 +36,7 @@ const data = [
     },
 ];
 
+
 export const SingleLine = () => (
     <LineChart
         data={data}
