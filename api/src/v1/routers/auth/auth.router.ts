@@ -1,6 +1,11 @@
 import { Router } from 'express';
 import { AuthController } from '../../controllers/auth/auth.controller';
 import { checkIfRegistrationIsValid } from '../../../middleware/auth/signUpVerification';
+import { validateRequest } from '../../../middleware/validator';
+import {
+  loginUserValidator,
+  registerUserValidator,
+} from '../../../middleware/validationSchemas/auth/authValidation';
 
 export class AuthRouter {
   constructor() {}
@@ -17,8 +22,12 @@ export class AuthRouter {
       next();
     });
 
-    router.post('/register', checkIfRegistrationIsValid, auth.registerUser);
-    router.post('/login', auth.loginUser);
+    router.post(
+      '/register',
+      [validateRequest(registerUserValidator), checkIfRegistrationIsValid],
+      auth.registerUser,
+    );
+    router.post('/login', validateRequest(loginUserValidator), auth.loginUser);
 
     return router;
   }

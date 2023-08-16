@@ -8,11 +8,12 @@ describe('Auth Controller Test', () => {
     afterAll(async () => {
       await UserModel.deleteMany({});
     });
+
     it('should register a user', async () => {
       //When
       const response = await request(app).post(`/auth/register`).send({
         name: 'the-user-name',
-        email: 'the-user-email',
+        email: 'the-user-email@email.com',
         password: 'the-user-password',
         role: 'user',
       });
@@ -26,7 +27,7 @@ describe('Auth Controller Test', () => {
       //Given
       await request(app).post(`/auth/register`).send({
         name: 'the-user-name',
-        email: 'the-user-email',
+        email: 'the-user-email@email.com',
         password: 'the-user-password',
         role: 'user',
       });
@@ -34,7 +35,7 @@ describe('Auth Controller Test', () => {
       //When
       const response = await request(app).post(`/auth/register`).send({
         name: 'the-user-name',
-        email: 'the-user-email',
+        email: 'the-user-email@email.com',
         password: 'the-user-password',
         role: 'user',
       });
@@ -54,14 +55,14 @@ describe('Auth Controller Test', () => {
       //Given
       await request(app).post(`/auth/register`).send({
         name: 'the-user-name',
-        email: 'the-user-email',
+        email: 'email@email.com',
         password: 'the-user-password',
         role: 'user',
       });
 
       //When
       const response = await request(app).post(`/auth/login`).send({
-        email: 'the-user-email',
+        email: 'email@email.com',
         password: 'the-user-password',
       });
 
@@ -69,7 +70,7 @@ describe('Auth Controller Test', () => {
       expect(response.status).toBe(200);
       expect(response.body.accessToken).toBeDefined();
       expect(response.body.name).toStrictEqual('the-user-name');
-      expect(response.body.email).toStrictEqual('the-user-email');
+      expect(response.body.email).toStrictEqual('email@email.com');
       expect(response.body.role).toStrictEqual('user');
     });
 
@@ -77,14 +78,14 @@ describe('Auth Controller Test', () => {
       //Given
       await request(app).post(`/auth/register`).send({
         name: 'the-user-name',
-        email: 'the-user-email',
+        email: 'email@email.com',
         password: 'the-user-password',
         role: 'user',
       });
 
       //When
       const response = await request(app).post(`/auth/login`).send({
-        email: 'the-user-email',
+        email: 'email@email.com',
         password: 'any-password',
       });
 
@@ -97,20 +98,20 @@ describe('Auth Controller Test', () => {
       //Given
       await request(app).post(`/auth/register`).send({
         name: 'the-user-name',
-        email: 'the-user-email',
+        email: 'email@email.com',
         password: 'the-user-password',
         role: 'user',
       });
 
       //When
       const response = await request(app).post(`/auth/login`).send({
-        email: 'any-user-email',
+        email: 'email@email.com',
         password: 'any-password',
       });
 
       //Then
-      expect(response.status).toBe(404);
-      expect(response.body.message).toStrictEqual('User Not found.');
+      expect(response.status).toBe(401);
+      expect(response.body.message).toStrictEqual('Invalid Password!');
     });
   });
 });
