@@ -6,6 +6,8 @@ import {
     LOGOUT,
 } from '../actions/types';
 
+import { PayloadAction } from '@reduxjs/toolkit';
+
 const user = localStorage.getItem('user');
 
 let initialState = {};
@@ -17,7 +19,7 @@ if (!user) {
     initialState = { isLoggedIn: true, parsedUSer };
 }
 
-export default function (state = initialState, action: any) {
+export default function (state = initialState, action: PayloadAction<any>) {
     const { type, payload } = action;
 
     switch (type) {

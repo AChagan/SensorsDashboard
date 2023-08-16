@@ -1,37 +1,38 @@
-import { useState } from 'react';
-
-import store from '../store';
 import { login } from '../actions/auth';
-import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../hooks';
 
 import Card from '../components/Card/Card';
 
+import { z } from 'zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const loginSchema = z.object({
+    email: z.string().email('Invalid email').min(1, 'Email is required'),
+    password: z
+        .string()
+        .min(1, 'Password is required')
+        .min(8, 'Password must have more than 8 characters'),
+});
+
+type LoginFormSchemaType = z.infer<typeof loginSchema>;
+
 function Login() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
-    const state = store.getState();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm<LoginFormSchemaType>({
+        resolver: zodResolver(loginSchema),
+    });
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-
-    function handleEmailChange(e) {
-        setEmail(e.target.value);
-    }
-
-    function handlePasswordChange(e) {
-        setPassword(e.target.value);
-    }
-
-    const handleLogin = (e) => {
-        e.preventDefault();
-
-        setLoading(true);
-
-        dispatch(login(email, password)).then(() => {
+    const handleLogin: SubmitHandler<LoginFormSchemaType> = (data) => {
+        dispatch(login(data.email, data.password)).then(() => {
             navigate('/', { replace: true });
             window.location.reload();
         });
@@ -40,7 +41,7 @@ function Login() {
     return (
         <div className="pt-2">
             <Card title="Login">
-                <form onSubmit={handleLogin}>
+                <form onSubmit={handleSubmit(handleLogin)}>
                     <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -53,13 +54,16 @@ function Login() {
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            onChange={handleEmailChange}
-                                            value={email}
                                             type="text"
-                                            name="email"
                                             id="email"
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            {...register('email')}
                                         />
+                                        {errors.email && (
+                                            <span className="text-red-800 block mt-2">
+                                                {errors.email?.message}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
 
@@ -72,13 +76,16 @@ function Login() {
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            onChange={handlePasswordChange}
-                                            value={password}
                                             type="password"
-                                            name="password"
                                             id="password"
+                                            {...register('password')}
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
+                                        {errors.password && (
+                                            <span className="text-red-800 block mt-2">
+                                                {errors.password?.message}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -88,6 +95,7 @@ function Login() {
                     <div className="mt-6 flex items-center justify-center gap-x-6">
                         <button
                             type="submit"
+                            disabled={isSubmitting}
                             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Login
@@ -99,7 +107,7 @@ function Login() {
     );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
     const { isLoggedIn } = state.auth;
     const { message } = state.message;
     return {
@@ -109,5 +117,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Login);
-
-// export default Login;
