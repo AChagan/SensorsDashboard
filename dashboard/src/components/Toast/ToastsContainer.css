@@ -1,0 +1,12 @@
+.toasts-container {
+    display: flex;
+    flex-direction: column-reverse;
+    row-gap: 12px;
+    position: fixed;
+    z-index: 9999;
+}
+
+.bottom-right {
+    bottom: 16px;
+    right: 16px;
+}
