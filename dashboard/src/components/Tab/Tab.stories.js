@@ -1,0 +1,23 @@
+import Tab from './Tab';
+
+export default {
+    title: 'Tab',
+    component: Tab,
+};
+
+export const DefaultTab = () => {
+    const data = [
+        {
+            title: 'Tab 1',
+            content:
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!',
+        },
+        {
+            title: 'Tab 2',
+            content:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptatevelit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officiadeserunt mollit anim id est laborum.',
+        },
+    ];
+
+    return <Tab tabData={data}></Tab>;
+};

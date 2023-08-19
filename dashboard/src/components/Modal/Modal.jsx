@@ -36,11 +36,13 @@ function Modal(props) {
                 >
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         <div className=" p-4 border-b border-solid border-slate-200 rounded-t">
-                            <h3 className="text-3xl items-center font-semibold">
+                            <h3 className="text-center text-3xl items-center font-semibold">
                                 {title}
                             </h3>
                         </div>
-                        <div className="relative p-6 flex-auto">{children}</div>
+                        <div className="relative p-6 flex-auto text-center">
+                            {children}
+                        </div>
                         <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                             {hasCloseButton ? (
                                 <>
