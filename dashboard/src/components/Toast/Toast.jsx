@@ -34,7 +34,7 @@ const toastTypes = {
     },
 };
 
-const Toast = ({ message, type, id }) => {
+const Toast = ({ message, type, id, isAutoRemoved = true }) => {
     const { icon, iconClass, progressBarClass } = toastTypes[type];
     const [dismissed, setDismissed] = useState(false);
 
@@ -50,6 +50,7 @@ const Toast = ({ message, type, id }) => {
     };
 
     useEffect(() => {
+        if (!isAutoRemoved) return;
         timerID.current = setTimeout(() => {
             handleDismiss();
         }, 4000);

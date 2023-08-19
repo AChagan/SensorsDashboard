@@ -31,7 +31,7 @@ function Modal(props) {
                 className="bg-black bg-opacity-75 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
             >
                 <div
-                    className="w-auto my-6 mx-auto max-w-3xl"
+                    className="w-3/4 my-6 mx-auto max-w-3xl"
                     onClick={stopPropagation}
                 >
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
