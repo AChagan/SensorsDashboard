@@ -48,7 +48,7 @@ function Tab(props) {
                     }}
                 />
             </div>
-            <div className="py-4">
+            <div className="py-2">
                 <div className="items-center justify-center text-center">
                     {tabData[activeTabIndex].content}
                 </div>
