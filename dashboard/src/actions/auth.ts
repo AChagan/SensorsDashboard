@@ -8,27 +8,27 @@ import {
 } from './types';
 
 import AuthService from '../services/auth.service';
+import { AxiosError } from 'axios';
 
 export const register =
-    (email: string, password: string) => async (dispatch: any) => {
-        return await AuthService.register(email, password).then(
-            (response: any) => {
+    (email: string, password: string, name: string, role: string) =>
+    async (dispatch: any) => {
+        return await AuthService.register(email, password, name, role).then(
+            (data: any) => {
                 dispatch({
                     type: REGISTER_SUCCESS,
                 });
 
                 dispatch({
                     type: SET_MESSAGE,
-                    payload: response.data.message,
+                    payload: data.message,
                 });
 
                 return Promise.resolve();
             },
-            (error: any) => {
+            (error: AxiosError) => {
                 const message =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
+                    (error.response && error.response.data) ||
                     error.message ||
                     error.toString();
 

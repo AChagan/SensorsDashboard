@@ -1,5 +1,6 @@
 import Tab from '../components/Tab/Tab';
 import Login from './Login';
+import Register from './Register';
 
 const Onboarding = () => {
     const data = [
@@ -9,7 +10,7 @@ const Onboarding = () => {
         },
         {
             title: 'Register',
-            content: 'WIP',
+            content: <Register />,
         },
     ];
 

@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Request, Response, NextFunction } from 'express';
-import { userParams } from '../../../models/user';
+import { User, userParams } from '../../../models/user';
 import { MongoBackedUserRepository } from '../../../repositories/user/mongoUser.repository';
 import { AuthService } from '../../../services/auth/auth.service';
 
@@ -12,7 +12,7 @@ export class AuthController {
   constructor() {}
   authService = new AuthService(new MongoBackedUserRepository());
   registerUser = async (req: Request, res: Response, next: NextFunction) => {
-    const userId = uuidv4();
+    const userId: string = uuidv4();
 
     const user: userParams = {
       userId: userId,
@@ -29,8 +29,8 @@ export class AuthController {
   };
 
   loginUser = async (req: Request, res: Response, next: NextFunction) => {
-    const email = req.body.email;
-    const user = await this.authService.findByEmail(email);
+    const email: string = req.body.email;
+    const user: User | undefined = await this.authService.findByEmail(email);
 
     if (!user) {
       return res.status(404).send({ message: 'User Not found.' });
@@ -48,7 +48,7 @@ export class AuthController {
       });
     }
 
-    const token = jwt.sign({ id: user.id }, Auth.key, {
+    const token: string = jwt.sign({ id: user.id }, Auth.key, {
       algorithm: 'HS256',
       expiresIn: 86400,
     });
