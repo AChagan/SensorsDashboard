@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks';
-
-import { login } from '../actions/auth';
-
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { login } from '../actions/auth';
+import { useToast } from '../hooks/useToast';
 
 const loginSchema = z.object({
     email: z.string().email('Invalid email').min(1, 'Email is required'),
@@ -21,6 +20,7 @@ type LoginFormSchemaType = z.infer<typeof loginSchema>;
 function Login() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const toast = useToast();
 
     const {
         register,
@@ -31,10 +31,14 @@ function Login() {
     });
 
     const handleLogin: SubmitHandler<LoginFormSchemaType> = (data) => {
-        dispatch(login(data.email, data.password)).then(() => {
-            navigate('/', { replace: true });
-            window.location.reload();
-        });
+        dispatch(login(data.email, data.password))
+            .then(() => {
+                navigate('/', { replace: true });
+                window.location.reload();
+            })
+            .catch((error) => {
+                toast.error(error);
+            });
     };
 
     return (

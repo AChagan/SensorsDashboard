@@ -1,6 +1,8 @@
 import { MongoDB } from './config/development.config';
 import express from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
+import morganBody from 'morgan-body';
 
 import mongoose from 'mongoose';
 import { V1Router } from './v1/v1';
@@ -27,6 +29,9 @@ export class API {
       db = 'test';
       port = undefined;
     }
+
+    app.use(bodyParser.json());
+    morganBody(app, { logRequestBody: false, logResponseBody: false });
 
     mongoose
       .connect(`mongodb://${MongoDB.HOST}:${MongoDB.PORT}/${db}`)

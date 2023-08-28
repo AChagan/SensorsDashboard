@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import { useAppDispatch } from '../hooks';
-
-import { register as registerAction } from '../actions/auth';
-
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '../hooks/useToast';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+import { register as registerAction } from '../actions/auth';
 
 const registerSchema = z.object({
     name: z.string(),
@@ -20,7 +21,9 @@ const registerSchema = z.object({
 type RegisterFormSchemaType = z.infer<typeof registerSchema>;
 
 function Register() {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const toast = useToast();
 
     const {
         register,
@@ -33,7 +36,14 @@ function Register() {
     const handleRegister: SubmitHandler<RegisterFormSchemaType> = (data) => {
         dispatch(
             registerAction(data.email, data.password, data.name, data.role)
-        );
+        )
+            .then(() => {
+                navigate('/', { replace: true });
+                window.location.reload();
+            })
+            .catch((error) => {
+                toast.error(error);
+            });
     };
 
     return (

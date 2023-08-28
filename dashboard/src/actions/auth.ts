@@ -13,8 +13,8 @@ import { AxiosError } from 'axios';
 export const register =
     (email: string, password: string, name: string, role: string) =>
     async (dispatch: any) => {
-        return await AuthService.register(email, password, name, role).then(
-            (data: any) => {
+        return await AuthService.register(email, password, name, role)
+            .then((data: any) => {
                 dispatch({
                     type: REGISTER_SUCCESS,
                 });
@@ -25,9 +25,9 @@ export const register =
                 });
 
                 return Promise.resolve();
-            },
-            (error: AxiosError) => {
-                const message =
+            })
+            .catch((error: AxiosError) => {
+                const errorMessage: any =
                     (error.response && error.response.data) ||
                     error.message ||
                     error.toString();
@@ -38,29 +38,26 @@ export const register =
 
                 dispatch({
                     type: SET_MESSAGE,
-                    payload: message,
+                    payload: errorMessage,
                 });
 
-                return Promise.reject();
-            }
-        );
+                return Promise.reject(errorMessage['message']);
+            });
     };
 
 export const login = (email: string, password: string) => (dispatch: any) => {
-    return AuthService.login(email, password).then(
-        (data) => {
+    return AuthService.login(email, password)
+        .then((data) => {
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: { user: data },
             });
 
             return Promise.resolve();
-        },
-        (error) => {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
+        })
+        .catch((error: AxiosError) => {
+            const errorMessage: any =
+                (error.response && error.response.data) ||
                 error.message ||
                 error.toString();
 
@@ -70,12 +67,10 @@ export const login = (email: string, password: string) => (dispatch: any) => {
 
             dispatch({
                 type: SET_MESSAGE,
-                payload: message,
+                payload: errorMessage,
             });
-
-            return Promise.reject();
-        }
-    );
+            return Promise.reject(errorMessage['message']);
+        });
 };
 
 export const logout = () => (dispatch: any) => {

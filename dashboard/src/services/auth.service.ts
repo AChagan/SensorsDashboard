@@ -5,22 +5,15 @@ export default class AuthService {
     static API_URL = 'http://localhost:8080/auth/';
 
     static async login(email: string, password: string) {
-        try {
-            return await axios
-                .post(this.API_URL + 'login', { email, password })
-                .then((response) => {
-                    if (response.data.accessToken) {
-                        localStorage.setItem(
-                            'user',
-                            JSON.stringify(response.data)
-                        );
-                    }
+        return await axios
+            .post(this.API_URL + 'login', { email, password })
+            .then((response) => {
+                if (response.data.accessToken) {
+                    localStorage.setItem('user', JSON.stringify(response.data));
+                }
 
-                    return response.data;
-                });
-        } catch (error) {
-            return { error: error };
-        }
+                return response.data;
+            });
     }
 
     static async register(
@@ -29,20 +22,16 @@ export default class AuthService {
         name: string,
         role: string
     ) {
-        try {
-            return await axios
-                .post(this.API_URL + 'register', {
-                    email,
-                    password,
-                    name,
-                    role,
-                })
-                .then((response) => {
-                    return response.data;
-                });
-        } catch (error) {
-            return error;
-        }
+        return await axios
+            .post(this.API_URL + 'register', {
+                email,
+                password,
+                name,
+                role,
+            })
+            .then((response) => {
+                return response.data;
+            });
     }
 
     static async logout() {
