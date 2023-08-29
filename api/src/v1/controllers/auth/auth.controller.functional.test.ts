@@ -72,6 +72,7 @@ describe('Auth Controller Test', () => {
       expect(response.body.name).toStrictEqual('the-user-name');
       expect(response.body.email).toStrictEqual('email@email.com');
       expect(response.body.role).toStrictEqual('user');
+      expect(response.body.userId).toBeValidUUID();
     });
 
     it('should not login a user with an invalid password', async () => {
